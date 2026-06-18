@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/Users/jasperoldersom/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7/skills/brainstorming/scripts/start-server.sh --project-dir /Users/jasperoldersom/Documents/Claude/meetings-tool)",
+      "Read(//private/tmp/**)",
+      "Bash(npx create-next-app@14 meetings-tool-temp --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)",
+      "Bash(cp -r /tmp/meetings-tool-temp/. /Users/jasperoldersom/Documents/Claude/meetings-tool/)",
+      "Bash(rm -rf /tmp/meetings-tool-temp)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

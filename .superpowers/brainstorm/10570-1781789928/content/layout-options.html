@@ -1,0 +1,368 @@
+<style>
+  .wireframes {
+    display: flex;
+    gap: 24px;
+    padding: 8px 0 24px 0;
+    flex-wrap: wrap;
+  }
+  .wf-card {
+    flex: 1;
+    min-width: 240px;
+    max-width: 320px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    background: var(--surface);
+  }
+  .wf-card:hover {
+    border-color: var(--accent);
+  }
+  .wf-card.selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  .wf-label {
+    padding: 12px 16px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .wf-letter {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wf-body {
+    padding: 12px;
+  }
+  .wf-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 10px;
+    line-height: 1.5;
+    padding: 0 4px;
+  }
+
+  /* Wireframe elements */
+  .wf-shell {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--bg);
+    font-size: 10px;
+  }
+  .wf-topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 5px 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .wf-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+  .wf-title-bar { flex: 1; height: 6px; background: var(--border); border-radius: 3px; }
+  .wf-row { display: flex; height: 100%; }
+
+  /* Layout A - Sidebar */
+  .wf-sidebar {
+    width: 90px;
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .wf-client-item {
+    padding: 4px 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .wf-client-item.active { background: color-mix(in srgb, var(--accent) 15%, transparent); }
+  .wf-avatar { width: 14px; height: 14px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+  .wf-avatar.colored { background: var(--accent); opacity: 0.6; }
+  .wf-client-name { height: 5px; background: var(--border); border-radius: 2px; flex: 1; }
+  .wf-main-panel {
+    flex: 1;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow: hidden;
+  }
+  .wf-header-strip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .wf-h-text { height: 8px; width: 80px; background: var(--border); border-radius: 3px; }
+  .wf-h-tag { height: 6px; width: 35px; background: color-mix(in srgb, var(--accent) 30%, transparent); border-radius: 3px; margin-left: auto; }
+  .wf-note-block {
+    background: var(--surface);
+    border-radius: 4px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .wf-note-date { height: 4px; width: 40px; background: var(--border); border-radius: 2px; opacity: 0.6; }
+  .wf-note-line { height: 4px; background: var(--border); border-radius: 2px; opacity: 0.5; }
+  .wf-note-line.short { width: 60%; }
+  .wf-fab {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent); opacity: 0.8;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 14px; font-weight: bold;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* Layout B - Cards */
+  .wf-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    padding: 8px;
+  }
+  .wf-client-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .wf-cc-header { display: flex; align-items: center; gap: 4px; }
+  .wf-cc-name { height: 6px; width: 55px; background: var(--border); border-radius: 2px; }
+  .wf-cc-badge { height: 5px; width: 20px; background: color-mix(in srgb, var(--accent) 40%, transparent); border-radius: 2px; margin-left: auto; }
+  .wf-cc-snippet { height: 4px; background: var(--border); border-radius: 2px; opacity: 0.4; }
+  .wf-cc-snippet.half { width: 60%; }
+  .wf-cc-date { height: 4px; width: 30px; background: var(--border); border-radius: 2px; opacity: 0.3; margin-top: 2px; }
+
+  /* Layout C - Focus */
+  .wf-focus-list {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .wf-focus-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 6px;
+    border-radius: 4px;
+    background: var(--surface);
+  }
+  .wf-focus-item.active {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border-left: 2px solid var(--accent);
+  }
+  .wf-focus-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .wf-focus-name { height: 6px; width: 70px; background: var(--border); border-radius: 2px; }
+  .wf-focus-sub { height: 4px; width: 90px; background: var(--border); border-radius: 2px; opacity: 0.4; }
+  .wf-focus-count {
+    height: 14px; width: 14px; border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+  .wf-detail-panel {
+    border-top: 1px solid var(--border);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 80px;
+  }
+  .wf-section-label { height: 4px; width: 45px; background: var(--accent); border-radius: 2px; opacity: 0.5; }
+  .wf-detail-line { height: 4px; background: var(--border); border-radius: 2px; opacity: 0.35; }
+  .wf-detail-line.half { width: 55%; }
+</style>
+
+<h2>Welke structuur past het best?</h2>
+<p class="subtitle">Drie manieren om klantnotities te organiseren — klik om te selecteren</p>
+
+<div class="wireframes">
+
+  <!-- Option A: Sidebar + Feed -->
+  <div class="wf-card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="wf-label">
+      <div class="wf-letter">A</div>
+      Sidebar + notitie-feed
+    </div>
+    <div class="wf-body">
+      <div class="wf-shell">
+        <div class="wf-topbar">
+          <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+          <div class="wf-title-bar"></div>
+        </div>
+        <div class="wf-row" style="height: 130px;">
+          <div class="wf-sidebar">
+            <div style="height:5px;width:50px;background:var(--border);border-radius:2px;margin-bottom:4px;opacity:0.5;"></div>
+            <div class="wf-client-item active">
+              <div class="wf-avatar colored"></div>
+              <div class="wf-client-name"></div>
+            </div>
+            <div class="wf-client-item">
+              <div class="wf-avatar"></div>
+              <div class="wf-client-name"></div>
+            </div>
+            <div class="wf-client-item">
+              <div class="wf-avatar"></div>
+              <div class="wf-client-name"></div>
+            </div>
+            <div class="wf-client-item">
+              <div class="wf-avatar"></div>
+              <div class="wf-client-name"></div>
+            </div>
+          </div>
+          <div class="wf-main-panel">
+            <div class="wf-header-strip">
+              <div class="wf-h-text"></div>
+              <div class="wf-h-tag"></div>
+              <div class="wf-fab">+</div>
+            </div>
+            <div class="wf-note-block">
+              <div class="wf-note-date"></div>
+              <div class="wf-note-line"></div>
+              <div class="wf-note-line short"></div>
+            </div>
+            <div class="wf-note-block">
+              <div class="wf-note-date"></div>
+              <div class="wf-note-line"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="wf-desc">Klanten in een vaste zijbalk. Rechts zie je alle notities van de geselecteerde klant als een chronologische feed.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Client Cards -->
+  <div class="wf-card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="wf-label">
+      <div class="wf-letter">B</div>
+      Klantenkaarten
+    </div>
+    <div class="wf-body">
+      <div class="wf-shell">
+        <div class="wf-topbar">
+          <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+          <div class="wf-title-bar"></div>
+          <div style="height:6px;width:30px;background:var(--accent);border-radius:3px;opacity:0.7;"></div>
+        </div>
+        <div class="wf-cards-grid">
+          <div class="wf-client-card" style="border-top: 2px solid var(--accent);">
+            <div class="wf-cc-header">
+              <div class="wf-avatar colored"></div>
+              <div class="wf-cc-name"></div>
+              <div class="wf-cc-badge"></div>
+            </div>
+            <div class="wf-cc-snippet" style="margin-top:3px;"></div>
+            <div class="wf-cc-snippet half"></div>
+            <div class="wf-cc-date"></div>
+          </div>
+          <div class="wf-client-card">
+            <div class="wf-cc-header">
+              <div class="wf-avatar"></div>
+              <div class="wf-cc-name"></div>
+              <div class="wf-cc-badge"></div>
+            </div>
+            <div class="wf-cc-snippet" style="margin-top:3px;"></div>
+            <div class="wf-cc-snippet half"></div>
+            <div class="wf-cc-date"></div>
+          </div>
+          <div class="wf-client-card">
+            <div class="wf-cc-header">
+              <div class="wf-avatar"></div>
+              <div class="wf-cc-name"></div>
+            </div>
+            <div class="wf-cc-snippet" style="margin-top:3px;"></div>
+            <div class="wf-cc-snippet half"></div>
+            <div class="wf-cc-date"></div>
+          </div>
+          <div class="wf-client-card">
+            <div class="wf-cc-header">
+              <div class="wf-avatar"></div>
+              <div class="wf-cc-name"></div>
+            </div>
+            <div class="wf-cc-snippet" style="margin-top:3px;"></div>
+            <div class="wf-cc-snippet half"></div>
+            <div class="wf-cc-date"></div>
+          </div>
+        </div>
+      </div>
+      <p class="wf-desc">Startscherm toont alle klanten als kaarten met snippet van de laatste notitie. Klik op een kaart voor de volledige notitieweergave.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Minimal List + Detail -->
+  <div class="wf-card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="wf-label">
+      <div class="wf-letter">C</div>
+      Lijst + detail
+    </div>
+    <div class="wf-body">
+      <div class="wf-shell">
+        <div class="wf-topbar">
+          <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+          <div class="wf-title-bar"></div>
+        </div>
+        <div style="height: 130px; display: flex; flex-direction: column;">
+          <div class="wf-focus-list" style="flex: 1;">
+            <div class="wf-focus-item active">
+              <div class="wf-avatar colored"></div>
+              <div class="wf-focus-text">
+                <div class="wf-focus-name"></div>
+                <div class="wf-focus-sub"></div>
+              </div>
+              <div class="wf-focus-count"></div>
+            </div>
+            <div class="wf-focus-item">
+              <div class="wf-avatar"></div>
+              <div class="wf-focus-text">
+                <div class="wf-focus-name"></div>
+                <div class="wf-focus-sub"></div>
+              </div>
+              <div class="wf-focus-count"></div>
+            </div>
+            <div class="wf-focus-item">
+              <div class="wf-avatar"></div>
+              <div class="wf-focus-text">
+                <div class="wf-focus-name"></div>
+              </div>
+            </div>
+          </div>
+          <div class="wf-detail-panel">
+            <div class="wf-section-label"></div>
+            <div class="wf-detail-line"></div>
+            <div class="wf-detail-line half"></div>
+            <div class="wf-detail-line"></div>
+          </div>
+        </div>
+      </div>
+      <p class="wf-desc">Klanten als simpele lijst bovenaan, notitieinhoud direct eronder. Heel compact, alles op één scherm zichtbaar zonder navigatie.</p>
+    </div>
+  </div>
+
+</div>

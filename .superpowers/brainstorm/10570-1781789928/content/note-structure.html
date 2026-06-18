@@ -1,0 +1,87 @@
+<style>
+  .options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 700px;
+  }
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    background: var(--surface);
+  }
+  .opt:hover { border-color: var(--accent); }
+  .opt.selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+  .opt-letter {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: white;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .opt-content h3 { margin: 0 0 4px; font-size: 15px; }
+  .opt-content p { margin: 0; font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .tag {
+    font-size: 11px; padding: 2px 8px; border-radius: 20px;
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    color: var(--accent); font-weight: 500;
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+</style>
+
+<h2>Wat noteer je per klant?</h2>
+<p class="subtitle">Dit bepaalt hoeveel structuur er per notitie nodig is</p>
+
+<div class="options-grid" style="margin-top: 20px;">
+
+  <div class="opt" data-choice="a" onclick="toggleSelect(this)">
+    <div class="opt-letter">A</div>
+    <div class="opt-content">
+      <h3>Voornamelijk vergadernotities</h3>
+      <p>Per gesprek/meeting een notitie: datum, wat besproken, wat te doen. Chronologisch overzicht van het klantcontact.</p>
+      <div class="tags">
+        <span class="tag">datum</span>
+        <span class="tag">wat besproken</span>
+        <span class="tag">actiepunten</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="opt" data-choice="b" onclick="toggleSelect(this)">
+    <div class="opt-letter">B</div>
+    <div class="opt-content">
+      <h3>Vrije notities + losse ideeën</h3>
+      <p>Alles door elkaar — snelle gedachten, stukjes info, linkjes, herinneringen. Minder gestructureerd, meer als een kladblok per klant.</p>
+      <div class="tags">
+        <span class="tag">vrije tekst</span>
+        <span class="tag">snel vastleggen</span>
+        <span class="tag">geen vaste vorm</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="opt" data-choice="c" onclick="toggleSelect(this)">
+    <div class="opt-letter">C</div>
+    <div class="opt-content">
+      <h3>Combinatie: meetings + losse notities</h3>
+      <p>Zowel vergaderverslagen als snelle losse notities. Meetings hebben een vaste structuur, losse notities zijn vrij.</p>
+      <div class="tags">
+        <span class="tag">meetings</span>
+        <span class="tag">losse notities</span>
+        <span class="tag">actiepunten</span>
+        <span class="tag">klantinfo</span>
+      </div>
+    </div>
+  </div>
+
+</div>
