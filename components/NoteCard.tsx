@@ -29,7 +29,7 @@ export function NoteCard({ meeting, onEdit, onDelete }: NoteCardProps) {
         <div className="ml-auto relative">
           <button
             onClick={() => setMenuOpen(m => !m)}
-            className="text-[#2e2e2e] hover:text-[#666] text-sm px-1"
+            className="text-[#555] hover:text-[#999] text-sm px-1"
           >
             ···
           </button>
