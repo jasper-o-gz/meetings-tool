@@ -3,20 +3,84 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-page: #f0f0f0;
+  --bg-sidebar: #e8e8e8;
+  --bg-card: #ffffff;
+  --bg-card-header: #f5f5f5;
+  --bg-input: #ffffff;
+  --bg-modal: #ffffff;
+  --bg-modal-header: #f5f5f5;
+  --bg-hover: #eeeeee;
+  --bg-active: #dde8ff;
+  --bg-menu: #ffffff;
+
+  --border-primary: #d0d0d0;
+  --border-input: #c0c0c0;
+  --border-focus: #3a62cc;
+  --border-menu: #d0d0d0;
+
+  --text-primary: #111111;
+  --text-secondary: #444444;
+  --text-muted: #777777;
+  --text-very-muted: #aaaaaa;
+  --text-placeholder: #bbbbbb;
+
+  --accent: #3a62cc;
+  --accent-hover: #2d52b8;
+  --accent-text: #ffffff;
+  --accent-bg: #e8f0ff;
+  --accent-border: #c0d0f0;
+
+  --danger: #cc3333;
+  --danger-bg: #fff0f0;
+
+  --label-color: #555555;
+  --badge-bg: #e8f5e8;
+  --badge-text: #2d6e2d;
+  --badge-border: #c0e0c0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --bg-page: #0d0d0d;
+  --bg-sidebar: #0d0d0d;
+  --bg-card: #161616;
+  --bg-card-header: #131313;
+  --bg-input: #1e1e1e;
+  --bg-modal: #161616;
+  --bg-modal-header: #131313;
+  --bg-hover: #1e1e1e;
+  --bg-active: #1a2338;
+  --bg-menu: #1e1e1e;
+
+  --border-primary: #2e2e2e;
+  --border-input: #2e2e2e;
+  --border-focus: #3a5acc;
+  --border-menu: #2e2e2e;
+
+  --text-primary: #f0f0f0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #707070;
+  --text-very-muted: #484848;
+  --text-placeholder: #3a3a3a;
+
+  --accent: #4f7eff;
+  --accent-hover: #6690ff;
+  --accent-text: #ffffff;
+  --accent-bg: #1a2438;
+  --accent-border: #263652;
+
+  --danger: #e05050;
+  --danger-bg: #2a1a1a;
+
+  --label-color: #606060;
+  --badge-bg: #162216;
+  --badge-text: #4a8a4a;
+  --badge-border: #1e421e;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--text-primary);
+  background: var(--bg-page);
   font-family: Arial, Helvetica, sans-serif;
 }
 

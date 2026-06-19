@@ -4,11 +4,13 @@ import { useRouter, usePathname } from 'next/navigation'
 import { useSession, signOut } from 'next-auth/react'
 import { Client } from '@/types'
 import { ClientForm } from './ClientForm'
+import { useTheme } from '@/lib/theme'
 
 export function Sidebar() {
   const router = useRouter()
   const pathname = usePathname()
   const { data: session } = useSession()
+  const { theme, toggle } = useTheme()
   const [clients, setClients] = useState<Client[]>([])
   const [search, setSearch] = useState('')
   const [showAddForm, setShowAddForm] = useState(false)
@@ -72,29 +74,29 @@ export function Sidebar() {
 
   return (
     <>
-      <aside className="w-60 bg-[#0d0d0d] border-r border-[#1e1e1e] flex flex-col flex-shrink-0">
+      <aside className="w-60 bg-[var(--bg-sidebar)] border-r border-[var(--border-primary)] flex flex-col flex-shrink-0">
         {/* Topbalk */}
-        <div className="px-4 pt-4 pb-3 border-b border-[#1a1a1a]">
+        <div className="px-4 pt-4 pb-3 border-b border-[var(--border-primary)]">
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-2 h-2 rounded-full bg-[#4f7eff]" />
-            <span className="text-sm font-bold text-[#e0e0e0]">Klantnotities</span>
+            <div className="w-2 h-2 rounded-full bg-[var(--accent)]" />
+            <span className="text-sm font-bold text-[var(--text-primary)]">Klantnotities</span>
           </div>
           <input
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Zoek klant..."
-            className="w-full bg-[#1a1a1a] border border-[#262626] rounded-lg px-3 py-1.5 text-xs text-[#888] outline-none focus:border-[#3a3a3a] placeholder:text-[#333]"
+            className="w-full bg-[var(--bg-input)] border border-[var(--border-input)] rounded-lg px-3 py-1.5 text-xs text-[var(--text-muted)] outline-none focus:border-[var(--border-focus)] placeholder:text-[var(--text-placeholder)]"
           />
         </div>
 
         {/* Klantenlijst */}
         <div className="flex-1 overflow-y-auto px-3 py-2" ref={menuRef}>
           <div className="flex items-center justify-between px-1 mb-1">
-            <span className="text-[10px] font-semibold text-[#3a3a3a] uppercase tracking-wider">Klanten</span>
+            <span className="text-[10px] font-semibold text-[var(--text-very-muted)] uppercase tracking-wider">Klanten</span>
             <button
               onClick={() => setShowAddForm(true)}
-              className="text-[10px] text-[#3a5acc] hover:text-[#4f7eff] font-medium"
+              className="text-[10px] text-[var(--accent)] hover:text-[var(--accent-hover)] font-medium"
             >
               + Nieuw
             </button>
@@ -105,7 +107,7 @@ export function Sidebar() {
               <button
                 onClick={() => router.push(`/app/${client.id}`)}
                 className={`w-full flex items-center gap-2.5 px-2 py-2 rounded-lg mb-0.5 text-left transition-colors ${
-                  activeId === client.id ? 'bg-[#1a2338]' : 'hover:bg-[#1a1a1a]'
+                  activeId === client.id ? 'bg-[var(--bg-active)]' : 'hover:bg-[var(--bg-hover)]'
                 }`}
               >
                 <div
@@ -115,29 +117,29 @@ export function Sidebar() {
                   {client.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className={`text-[13px] font-medium truncate ${activeId === client.id ? 'text-white' : 'text-[#c0c0c0]'}`}>
+                  <div className={`text-[13px] font-medium truncate ${activeId === client.id ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
                     {client.name}
                   </div>
                 </div>
                 <button
                   onClick={e => { e.stopPropagation(); setMenuOpen(menuOpen === client.id ? null : client.id) }}
-                  className="opacity-0 group-hover:opacity-100 text-[#3a3a3a] hover:text-[#666] text-sm px-1"
+                  className="opacity-0 group-hover:opacity-100 text-[var(--text-very-muted)] hover:text-[var(--text-muted)] text-sm px-1"
                 >
                   ···
                 </button>
               </button>
 
               {menuOpen === client.id && (
-                <div className="absolute right-2 top-8 bg-[#1e1e1e] border border-[#2a2a2a] rounded-lg py-1 z-10 min-w-[7rem] shadow-xl">
+                <div className="absolute right-2 top-8 bg-[var(--bg-menu)] border border-[var(--border-menu)] rounded-lg py-1 z-10 min-w-[7rem] shadow-xl">
                   <button
                     onClick={() => { setRenameTarget(client); setMenuOpen(null) }}
-                    className="w-full px-3 py-1.5 text-xs text-left text-[#aaa] hover:bg-[#2a2a2a]"
+                    className="w-full px-3 py-1.5 text-xs text-left text-[var(--text-secondary)] hover:bg-[var(--bg-hover)]"
                   >
                     Hernoemen
                   </button>
                   <button
                     onClick={() => handleDelete(client)}
-                    className="w-full px-3 py-1.5 text-xs text-left text-[#e05050] hover:bg-[#2a2a2a]"
+                    className="w-full px-3 py-1.5 text-xs text-left text-[var(--danger)] hover:bg-[var(--bg-hover)]"
                   >
                     Verwijderen
                   </button>
@@ -147,20 +149,26 @@ export function Sidebar() {
           ))}
 
           {filtered.length === 0 && search && (
-            <p className="text-xs text-[#333] px-2 py-2">Geen klanten gevonden</p>
+            <p className="text-xs text-[var(--text-placeholder)] px-2 py-2">Geen klanten gevonden</p>
           )}
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-3 border-t border-[#1a1a1a]">
+        <div className="px-4 py-3 border-t border-[var(--border-primary)]">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-full bg-[#1e1e1e] border border-[#2a2a2a] flex items-center justify-center text-[11px] text-[#666] font-semibold">
+            <div className="w-6 h-6 rounded-full bg-[var(--bg-input)] border border-[var(--border-input)] flex items-center justify-center text-[11px] text-[var(--text-muted)] font-semibold">
               {session?.user?.email?.[0]?.toUpperCase()}
             </div>
-            <span className="text-[11px] text-[#444] flex-1 truncate">{session?.user?.email}</span>
+            <span className="text-[11px] text-[var(--text-secondary)] flex-1 truncate">{session?.user?.email}</span>
+            <button
+              onClick={toggle}
+              className="text-[10px] text-[var(--text-very-muted)] hover:text-[var(--text-muted)] mr-2"
+            >
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
             <button
               onClick={() => signOut({ callbackUrl: '/login' })}
-              className="text-[10px] text-[#333] hover:text-[#555]"
+              className="text-[10px] text-[var(--text-very-muted)] hover:text-[var(--text-muted)]"
             >
               Uit
             </button>

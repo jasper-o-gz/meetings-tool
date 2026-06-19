@@ -39,7 +39,7 @@ export function NotesFeed({ client, initialMeetings }: NotesFeedProps) {
   return (
     <>
       <div className="flex flex-col h-full">
-        <div className="flex items-center gap-3.5 px-6 py-4 border-b border-[#1e1e1e] flex-shrink-0">
+        <div className="flex items-center gap-3.5 px-6 py-4 border-b border-[var(--border-primary)] flex-shrink-0">
           <div
             className="w-9 h-9 rounded-lg flex items-center justify-center text-[14px] font-bold flex-shrink-0"
             style={{ background: client.color_bg, color: client.color }}
@@ -47,17 +47,17 @@ export function NotesFeed({ client, initialMeetings }: NotesFeedProps) {
             {client.name.slice(0, 2).toUpperCase()}
           </div>
           <div className="flex-1">
-            <h1 className="text-[17px] font-semibold text-[#f0f0f0] leading-none tracking-tight">
+            <h1 className="text-[17px] font-semibold text-[var(--text-primary)] leading-none tracking-tight">
               {client.name}
             </h1>
-            <p className="text-xs text-[#484848] mt-1">
+            <p className="text-xs text-[var(--text-very-muted)] mt-1">
               {meetings.length} {meetings.length === 1 ? 'meeting' : 'meetings'}
               {lastContact ? ` · laatste contact ${lastContact}` : ''}
             </p>
           </div>
           <button
             onClick={() => setShowForm(true)}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#3a62cc] text-white text-sm font-medium rounded-lg hover:bg-[#4570e0] transition-colors"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[var(--accent)] text-[var(--accent-text)] text-sm font-medium rounded-lg hover:bg-[var(--accent-hover)] transition-colors"
           >
             + Nieuwe meeting
           </button>
@@ -67,10 +67,10 @@ export function NotesFeed({ client, initialMeetings }: NotesFeedProps) {
           {meetings.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
-                <p className="text-[#3a3a3a] text-sm">Nog geen meetings vastgelegd</p>
+                <p className="text-[var(--text-very-muted)] text-sm">Nog geen meetings vastgelegd</p>
                 <button
                   onClick={() => setShowForm(true)}
-                  className="mt-3 text-xs text-[#3a5acc] hover:text-[#4f7eff]"
+                  className="mt-3 text-xs text-[var(--accent)] hover:text-[var(--accent-hover)]"
                 >
                   Voeg eerste meeting toe →
                 </button>
